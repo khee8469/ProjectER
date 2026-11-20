@@ -89,7 +89,7 @@ private:
 	void OnRep_IsDead();
 
 	UFUNCTION()
-	void OnRep_MonsterData();
+	void OnRep_MonsterId();
 	
 	// 이벤트 태그
 	UFUNCTION()
@@ -174,7 +174,7 @@ public:
 	void OnMonsterDataLoadedEvent(FPrimaryAssetId MonsterAssetId, float Level);
 	
 private:
-	UPROPERTY(ReplicatedUsing = OnRep_MonsterData)
+	UPROPERTY(ReplicatedUsing = OnRep_MonsterId)
 	FPrimaryAssetId MonsterId;
 
 	UPROPERTY(Replicated)

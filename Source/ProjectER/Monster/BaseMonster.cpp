@@ -369,7 +369,7 @@ void ABaseMonster::OnRep_IsDead()
 	}
 }
 
-void ABaseMonster::OnRep_MonsterData()
+void ABaseMonster::OnRep_MonsterId()
 {
 	InitMonsterDataLoading(MonsterId, MonsterLevel);
 }
