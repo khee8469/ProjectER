@@ -799,12 +799,6 @@ bool ABaseMonster::IsTargetable() const
 	return true;
 }
 
-void ABaseMonster::Server_SetTeamID_Implementation(ETeamType NewTeamID)
-{
-	TeamID = NewTeamID;
-	OnRep_TeamID();
-}
-
 void ABaseMonster::HighlightActor(bool bIsHighlight, int32 StencilValue)
 {
 	if (USkeletalMeshComponent* MyMesh = GetMesh())
@@ -818,11 +812,6 @@ void ABaseMonster::HighlightActor(bool bIsHighlight, int32 StencilValue)
 			MyMesh->SetCustomDepthStencilValue(StencilValue);
 		}
 	}
-}
-
-void ABaseMonster::OnRep_TeamID()
-{
-
 }
 
 void ABaseMonster::Death()
