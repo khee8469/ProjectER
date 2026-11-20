@@ -1,6 +1,5 @@
 ﻿#include "Monster/MonsterRangeComponent.h"
 
-#include "Net/UnrealNetwork.h"
 #include "Components/SphereComponent.h"
 #include "Components/StateTreeComponent.h"
 #include "CharacterSystem/Character/BaseCharacter.h"
@@ -10,13 +9,6 @@ UMonsterRangeComponent::UMonsterRangeComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 
-}
-
-void UMonsterRangeComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(UMonsterRangeComponent, PlayerCount);
 }
 
 void UMonsterRangeComponent::BeginPlay()

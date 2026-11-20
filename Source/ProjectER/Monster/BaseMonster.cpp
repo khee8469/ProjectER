@@ -69,15 +69,14 @@ ABaseMonster::ABaseMonster()
 	
 	AttributeSet = CreateDefaultSubobject<UBaseMonsterAttributeSet>(TEXT("AttributeSet"));
 
-	// StateTree은 각 클라에서 실행
+	// StateTree는 서버에서만 실행
 	StateTreeComp = CreateDefaultSubobject<UStateTreeComponent>(TEXT("StateTree"));
 	StateTreeComp->SetComponentTickEnabled(false);
 	StateTreeComp->SetStartLogicAutomatically(false);
 
-	// 주변 플레이어 감지용 컴포넌트
-	MonsterRangeComp = CreateDefaultSubobject<UMonsterRangeComponent>(TEXT("MonsterRangeComponent"));	
+	// 서버에서 주변 플레이어 감지용 컴포넌트
+	MonsterRangeComp = CreateDefaultSubobject<UMonsterRangeComponent>(TEXT("MonsterRangeComponent"));
 	MonsterRangeComp->SetComponentTickEnabled(false);
-	MonsterRangeComp->SetIsReplicated(true);
 
 	//UI Component
 	HPBarWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComponent"));

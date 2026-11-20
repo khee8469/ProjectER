@@ -18,8 +18,6 @@ class PROJECTER_API UMonsterRangeComponent : public UActorComponent
 public:	
 	UMonsterRangeComponent();
 
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-
 	void SetPlayerCount(int32 Amount);
 	int32 GetPlayerCount();
 	void SetOutSphereRadius(float Radius);
@@ -62,7 +60,7 @@ public:
 
 private:
 
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "MonsterRange",meta = (AllowprivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MonsterRange",meta = (AllowprivateAccess = "true"))
 	int32 PlayerCount = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MonsterRange", meta = (AllowprivateAccess = "true"), meta = (ClampMin = "0.0"))
