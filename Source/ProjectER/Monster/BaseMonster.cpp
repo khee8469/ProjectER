@@ -38,6 +38,8 @@ ABaseMonster::ABaseMonster()
 	SetReplicates(true);
 	//위치 / 회전 / 속도 동기화
 	SetReplicateMovement(true);
+	// 해당 액터가 서버에서 업데이트 받는 거리
+	SetNetCullDistanceSquared(5000.f * 5000.f);
 
 	//Tick 설정
 	PrimaryActorTick.bCanEverTick = false;
