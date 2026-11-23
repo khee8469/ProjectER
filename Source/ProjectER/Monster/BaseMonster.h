@@ -90,7 +90,10 @@ private:
 
 	UFUNCTION()
 	void OnRep_MonsterId();
-	
+
+	UFUNCTION()
+	void OnRep_CollisionProfile();
+
 	// 이벤트 태그
 	UFUNCTION()
 	void MonsterGroupHitCall(AActor* Target);
@@ -124,8 +127,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InitMonsterData(FPrimaryAssetId MonsterAssetId, float Level);
 	
-	UFUNCTION(NetMulticast, BlueprintCallable, Reliable)
-	void Multicast_SetCollisionProfileName(FName ProfileName);
+	UFUNCTION(BlueprintCallable)
+	void SetCollisionProfile(FName NewProfile);
 
 	// 쿨다운 태그 관련
 	UFUNCTION(BlueprintCallable)
@@ -179,6 +182,9 @@ private:
 
 	UPROPERTY(Replicated)
 	float MonsterLevel;
+
+	UPROPERTY(ReplicatedUsing = OnRep_CollisionProfile)
+	FName CollisionProfile;
 
 
 public:

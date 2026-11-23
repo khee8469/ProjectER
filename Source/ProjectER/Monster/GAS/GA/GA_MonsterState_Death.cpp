@@ -42,7 +42,7 @@ void UGA_MonsterState_Death::ActivateAbility(const FGameplayAbilitySpecHandle Ha
 	
 	if (Monster->HasAuthority())
 	{
-		Monster->Multicast_SetCollisionProfileName(FName("Spectator"));
+		Monster->SetCollisionProfile(FName("Spectator"));
 	}
 }
 

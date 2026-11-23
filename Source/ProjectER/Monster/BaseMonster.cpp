@@ -110,6 +110,7 @@ void ABaseMonster::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 	DOREPLIFETIME(ABaseMonster, TeamID);
 	DOREPLIFETIME(ABaseMonster, MonsterId);
 	DOREPLIFETIME(ABaseMonster, MonsterLevel);
+	DOREPLIFETIME(ABaseMonster, CollisionProfile);
 }
 
 void ABaseMonster::PossessedBy(AController* newController)
@@ -222,7 +223,6 @@ void ABaseMonster::OnMonsterDataLoaded(FPrimaryAssetId MonsterAssetId, float Lev
 		InitStateTree();
 	}
 
-	//Trigger BP event function
 	OnMonsterDataLoadedEvent(MonsterAssetId, Level);
 }
 
@@ -339,7 +339,8 @@ void ABaseMonster::InitCollision()
 {
 	GetMesh()->SetRelativeScale3D(MonsterData->MeshScale);
 	GetCapsuleComponent()->SetCapsuleSize(MonsterData->CollisionRadius, MonsterData->CapsuleHalfHeight);
-	GetCapsuleComponent()->SetCollisionProfileName("MonsterObjectCollision");
+	if (CollisionProfile.IsNone()) {
+		GetCapsuleComponent()->SetCollisionProfileName(FName("MonsterObjectCollision")); }
 	HitBoxComp->SetBoxExtent(MonsterData->HitBoxExtent);
 	HitBoxComp->SetCollisionProfileName("MonsterTraceCollision");
 
@@ -386,9 +387,23 @@ void ABaseMonster::OnMoveSpeedChangedHandle(float OldSpeed, float NewSpeed)
 	GetCharacterMovement()->MaxWalkSpeed = NewSpeed;
 }
 
-void ABaseMonster::Multicast_SetCollisionProfileName_Implementation(FName ProfileName)
+void ABaseMonster::SetCollisionProfile(FName NewProfile)
 {
-	GetCapsuleComponent()->SetCollisionProfileName(ProfileName);
+	if (HasAuthority() == false)
+	{
+		return;
+	}
+
+	CollisionProfile = NewProfile;
+	OnRep_CollisionProfile();
+}
+
+void ABaseMonster::OnRep_CollisionProfile()
+{
+	if (CollisionProfile.IsNone() == false)
+	{
+		GetCapsuleComponent()->SetCollisionProfileName(CollisionProfile);
+	}
 }
 
 void ABaseMonster::InitHPBar()

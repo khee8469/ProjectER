@@ -27,7 +27,7 @@ EStateTreeRunStatus FSTT_SetCollisionProfile::EnterState(FStateTreeExecutionCont
 
 	if (ABaseMonster* Monster = Cast<ABaseMonster>(&Actor))
 	{
-		Monster->Multicast_SetCollisionProfileName(InstanceData.StartProfileName.Name);
+		Monster->SetCollisionProfile(InstanceData.StartProfileName.Name);
 
 		return EStateTreeRunStatus::Running;
 	}
@@ -42,6 +42,6 @@ void FSTT_SetCollisionProfile::ExitState(FStateTreeExecutionContext& Context, co
 
 	if (ABaseMonster* Monster = Cast<ABaseMonster>(&Actor))
 	{
-		Monster->Multicast_SetCollisionProfileName(InstanceData.EndProfileName.Name);
+		Monster->SetCollisionProfile(InstanceData.EndProfileName.Name);
 	}
 }
