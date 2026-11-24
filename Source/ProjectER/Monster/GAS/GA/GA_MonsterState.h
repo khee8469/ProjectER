@@ -64,6 +64,8 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "MonsterState")
 	bool bIsUseWaitTag = false;
 
+	UPROPERTY(EditAnywhere, Category = "MonsterState")
+	bool bIsUseMontage = true;
 
 
 	UPROPERTY(EditAnywhere, Category = "MonsterState")

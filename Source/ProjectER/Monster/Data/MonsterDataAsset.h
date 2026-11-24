@@ -15,7 +15,6 @@ struct FGameplayTag;
 UENUM(BlueprintType)
 enum class EMonsterMontageType : uint8
 {
-	Idle,
 	Alert,
 	Move,
 	Attack,

@@ -3,11 +3,12 @@
 UGA_MonsterState_Idle::UGA_MonsterState_Idle()
 {
 	StateInitData.MonsterAssetTags = FGameplayTagContainer(FGameplayTag::RequestGameplayTag("Ability.Action.Idle"));
-	StateInitData.MontageType = EMonsterMontageType::Idle;
+	StateInitData.MontageType = EMonsterMontageType::None;
 	StateInitData.NiagaraCueTag = FGameplayTag::RequestGameplayTag("GameplayCue.Particle.Action.Idle");
 	StateInitData.SoundCueTag = FGameplayTag::RequestGameplayTag("GameplayCue.Sound.Action.Idle");
 	StateInitData.WaitTag = FGameplayTag::RequestGameplayTag("State.Action.Idle");
 	bIsUseWaitTag = true;
+	bIsUseMontage = false; // Idle은 애님 블루프린트 시퀀스 사용 (대기 중 몽타주 복제 제거)
 	SetAssetTags(StateInitData.MonsterAssetTags);
 }
 

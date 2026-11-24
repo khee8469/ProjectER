@@ -52,14 +52,20 @@ void UGA_MonsterState::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 		return;
 	}
 
-	TObjectPtr<UAnimMontage> Montage = *Monster->MonsterData->Montages.Find(StateInitData.MontageType);
-	if (IsValid(Montage))
+	if (bIsUseMontage)
 	{
+		TObjectPtr<UAnimMontage>* Montage = Monster->MonsterData->Montages.Find(StateInitData.MontageType);
+		if (Montage == nullptr || IsValid(*Montage) == false)
+		{
+			EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
+			return;
+		}
+
 		UAbilityTask_PlayMontageAndWait* WaitPlayMontageTask =
 			UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 				this,
 				NAME_None,
-				Montage,
+				*Montage,
 				1.f,
 				NAME_None,
 				true,
@@ -73,11 +79,6 @@ void UGA_MonsterState::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 		WaitPlayMontageTask->OnInterrupted.AddDynamic(this, &UGA_MonsterState::OnMontageInterrupt);
 		WaitPlayMontageTask->OnCancelled.AddDynamic(this, &UGA_MonsterState::OnMontageCancel);
 		WaitPlayMontageTask->ReadyForActivation();
-	}
-	else
-	{
-		EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
-		return;
 	}
 
 	if (StateInitData.SoundCueTag.IsValid())
