@@ -40,6 +40,8 @@ ABaseMonster::ABaseMonster()
 	SetReplicateMovement(true);
 	// 해당 액터가 서버에서 업데이트 받는 거리
 	SetNetCullDistanceSquared(5000.f * 5000.f);
+	// 몬스터 복제 갱신 빈도
+	SetNetUpdateFrequency(60.f);
 
 	//Tick 설정
 	PrimaryActorTick.bCanEverTick = false;
@@ -357,18 +359,19 @@ void ABaseMonster::InitStateTree()
 
 void ABaseMonster::OnRep_IsCombat()
 {
-	// BP_BaseMonster Eventgraph에서 하는중
-	//if (HPBarWidgetComp)
-	//{
-	//	HPBarWidgetComp->SetVisibility(bIsCombat);
-	//}
+	UpdateHPBarVisibility();
 }
 
 void ABaseMonster::OnRep_IsDead()
 {
-	if (bIsDead && HPBarWidgetComp)
+	UpdateHPBarVisibility();
+}
+
+void ABaseMonster::UpdateHPBarVisibility()
+{
+	if (HPBarWidgetComp)
 	{
-		HPBarWidgetComp->SetVisibility(false);
+		HPBarWidgetComp->SetVisibility((bIsCombat || bIsHovered) && !bIsDead);
 	}
 }
 
@@ -829,6 +832,10 @@ void ABaseMonster::HighlightActor(bool bIsHighlight, int32 StencilValue)
 			MyMesh->SetCustomDepthStencilValue(StencilValue);
 		}
 	}
+
+	// 마우스를 올린 동안 HP바 임시 표시
+	bIsHovered = bIsHighlight;
+	UpdateHPBarVisibility();
 }
 
 void ABaseMonster::Death()

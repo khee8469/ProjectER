@@ -88,6 +88,8 @@ private:
 	UFUNCTION()
 	void OnRep_IsDead();
 
+	void UpdateHPBarVisibility();
+
 	UFUNCTION()
 	void OnRep_MonsterId();
 
@@ -243,6 +245,7 @@ private:
 	UPROPERTY(ReplicatedUsing = OnRep_IsDead, VisibleAnywhere, BlueprintReadWrite, Category = "StateTree", meta = (AllowPrivateAccess = "true"))
 	bool bIsDead;
 
+	bool bIsHovered = false;
 
 	bool bIsFirstAttack = false;
 
